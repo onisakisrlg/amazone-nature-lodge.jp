@@ -103,7 +103,7 @@ export default function App() {
       </nav>
 
       {/* Hero Section */}
-      <section ref={heroRef} className="relative h-screen flex items-center justify-center overflow-hidden">
+      <section id="ホーム" ref={heroRef} className="relative h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <img 
             src="https://picsum.photos/seed/forest-resort/1920/1080" 
@@ -207,15 +207,64 @@ export default function App() {
         </div>
       </section>
 
+      {/* Guiana Details Section */}
+      <section className="py-24 bg-cream-100">
+        <div className="container mx-auto px-6">
+          <div className="bg-forest-900 border border-forest-900/10 rounded-[3rem] p-12 md:p-20 text-cream-100 relative overflow-hidden shadow-2xl">
+            <div className="absolute top-0 right-0 w-1/2 h-full opacity-10 pointer-events-none">
+               <img src="https://picsum.photos/seed/map-pattern/1000/1000" className="w-full h-full object-cover grayscale invert" alt="Map pattern" />
+            </div>
+            
+            <div className="relative z-10 max-w-3xl">
+              <span className="text-earth-500 font-bold tracking-[0.3em] uppercase text-xs mb-6 block">Region Insights</span>
+              <h2 className="text-4xl md:text-6xl font-serif font-black mb-10 leading-tight italic">
+                {CONTENT.about.guianaDetails.title}
+              </h2>
+              <p className="text-lg md:text-xl text-cream-100/70 leading-relaxed tracking-widest mb-12">
+                {CONTENT.about.guianaDetails.content}
+              </p>
+              
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-8 border-t border-cream-100/10 pt-12">
+                 <div>
+                   <span className="block text-2xl font-serif font-bold text-earth-500 mb-2">98%</span>
+                   <span className="text-[10px] uppercase tracking-widest text-cream-100/40">Rainforest Area</span>
+                 </div>
+                 <div>
+                   <span className="block text-2xl font-serif font-bold text-earth-500 mb-2">26°C</span>
+                   <span className="text-[10px] uppercase tracking-widest text-cream-100/40">Avg Temperature</span>
+                 </div>
+                 <div>
+                   <span className="block text-2xl font-serif font-bold text-earth-500 mb-2">EU</span>
+                   <span className="text-[10px] uppercase tracking-widest text-cream-100/40">Part of France</span>
+                 </div>
+                 <div>
+                   <span className="block text-2xl font-serif font-bold text-earth-500 mb-2">Equatorial</span>
+                   <span className="text-[10px] uppercase tracking-widest text-cream-100/40">Climate</span>
+                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Accommodation Section */}
-      <section className="py-24 md:py-32 bg-forest-900 text-cream-100 overflow-hidden">
+      <section id="ロッジ" className="py-24 md:py-32 bg-forest-900 text-cream-100 overflow-hidden">
         <div className="container mx-auto px-6">
           <div className="text-center mb-20">
             <span className="text-earth-500 font-bold tracking-[0.3em] uppercase text-xs mb-4 block">Our Sanctuary</span>
             <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6 italic">{CONTENT.accommodation.title}</h2>
-            <p className="text-cream-100/60 max-w-2xl mx-auto tracking-widest leading-relaxed">
+            <p className="text-cream-100/60 max-w-2xl mx-auto tracking-widest leading-relaxed mb-12">
               {CONTENT.accommodation.description}
             </p>
+            
+            <div className="flex flex-wrap justify-center gap-6 mb-16">
+               {CONTENT.accommodation.ecoConcept.items.map((concept, idx) => (
+                 <div key={idx} className="bg-cream-100/5 backdrop-blur-sm border border-cream-100/10 px-6 py-3 rounded-full flex items-center gap-3">
+                   <div className="w-2 h-2 rounded-full bg-earth-500" />
+                   <span className="text-xs font-medium tracking-widest">{concept}</span>
+                 </div>
+               ))}
+            </div>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
@@ -253,7 +302,7 @@ export default function App() {
       </section>
 
       {/* Entomology Section - Special Feature */}
-      <section className="py-24 md:py-32 bg-cream-100 relative overflow-hidden">
+      <section id="昆虫学" className="py-24 md:py-32 bg-cream-100 relative overflow-hidden">
         <motion.div 
           style={{ y }}
           className="absolute -right-20 top-0 opacity-[0.03] select-none"
@@ -297,6 +346,25 @@ export default function App() {
               <p className="text-lg text-forest-900/70 leading-loose tracking-widest mb-10">
                 {CONTENT.entomology.description}
               </p>
+              
+              <div className="grid grid-cols-3 gap-6 mb-12 bg-forest-900/5 p-8 rounded-3xl border border-forest-900/5">
+                {CONTENT.entomology.stats.map((stat, idx) => (
+                  <div key={idx} className="text-center">
+                    <span className="block text-2xl md:text-4xl font-serif font-black text-earth-500 mb-1">{stat.value}</span>
+                    <span className="text-[9px] uppercase tracking-widest font-bold text-forest-900/40">{stat.label}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="space-y-6 mb-12">
+                 <p className="text-sm font-medium leading-relaxed border-l-2 border-earth-500 pl-6 border-opacity-30 italic text-forest-900/80">
+                   {CONTENT.entomology.fauna.morpho}
+                 </p>
+                 <p className="text-sm font-medium leading-relaxed border-l-2 border-earth-500 pl-6 border-opacity-30 italic text-forest-900/80">
+                   {CONTENT.entomology.fauna.giants}
+                 </p>
+              </div>
+
               <div className="grid sm:grid-cols-2 gap-8 mb-16">
                 {CONTENT.entomology.features.map((feature: any, idx: number) => (
                   <motion.div 
@@ -328,8 +396,65 @@ export default function App() {
         </div>
       </section>
 
+      {/* Export Support Section (Japanese Market Focus) */}
+      <section id="日本向け輸出サポート" className="py-24 md:py-32 bg-forest-900 text-cream-100 overflow-hidden relative">
+         <div className="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none">
+            <Bug className="w-[800px] h-[800px] absolute -top-40 -left-40" />
+            <Bug className="w-[800px] h-[800px] absolute -bottom-40 -right-40 rotate-180" />
+         </div>
+
+         <div className="container mx-auto px-6 relative z-10">
+            <div className="max-w-4xl mx-auto">
+               <div className="text-center mb-16">
+                  <span className="text-earth-500 font-bold tracking-[0.3em] uppercase text-xs mb-4 block">Dedicated Support</span>
+                  <h2 className="text-4xl md:text-7xl font-serif font-black mb-8 italic tracking-tighter">
+                    {CONTENT.exportSupport.title}
+                  </h2>
+                  <p className="text-xl md:text-2xl font-serif italic text-earth-500 mb-12">
+                    {CONTENT.exportSupport.subtitle}
+                  </p>
+                  <p className="text-cream-100/70 text-lg leading-loose tracking-widest max-w-3xl mx-auto">
+                    {CONTENT.exportSupport.description}
+                  </p>
+               </div>
+
+               <div className="grid md:grid-cols-2 gap-8 mb-16">
+                  {CONTENT.exportSupport.legalDetails.map((detail, idx) => (
+                    <motion.div 
+                      key={idx}
+                      whileHover={{ scale: 1.02 }}
+                      className="bg-cream-100/5 p-8 rounded-3xl border border-cream-100/10 flex items-start gap-6"
+                    >
+                      <div className="w-12 h-12 rounded-2xl bg-earth-500/20 flex items-center justify-center shrink-0">
+                         <FileText size={24} className="text-earth-500" />
+                      </div>
+                      <p className="text-sm md:text-base font-medium leading-loose tracking-widest">
+                        {detail}
+                      </p>
+                    </motion.div>
+                  ))}
+               </div>
+
+               <div className="bg-earth-500/10 border border-earth-500/20 p-10 rounded-[2.5rem] text-center">
+                  <p className="text-lg md:text-xl font-serif italic mb-10 leading-relaxed">
+                    "{CONTENT.exportSupport.guarantee}"
+                  </p>
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+                     <button className="w-full sm:w-auto bg-cream-100 text-forest-900 px-10 py-5 rounded-full font-black tracking-widest uppercase shadow-lg hover:bg-earth-500 transition-colors">
+                        輸出申告の手続き詳細
+                     </button>
+                     <div className="flex items-center gap-4 text-xs font-bold tracking-[0.2em] uppercase opacity-50">
+                        <Bug size={16} />
+                        Japanese Customs Compliant
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+
       {/* Amenities Grid */}
-      <section className="py-24 bg-forest-800 text-cream-100">
+      <section id="基本情報" className="py-24 bg-forest-800 text-cream-100">
         <div className="container mx-auto px-6">
            <div className="grid grid-cols-2 md:grid-cols-4 gap-12 text-center">
               {CONTENT.amenities.map((amenity, idx) => (
