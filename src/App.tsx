@@ -18,8 +18,8 @@ import {
   Search,
   FileText
 } from 'lucide-react';
-import { useState, useRef } from 'react';
-import { CONTENT } from './constants';
+import { useState, useRef, useEffect } from 'react';
+import { CONTENT, GALLERY_IMAGES } from './constants';
 
 const BugEffect = ({ className }: { className?: string }) => (
   <motion.div
@@ -40,12 +40,136 @@ const BugEffect = ({ className }: { className?: string }) => (
 
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isGalleryOpen, setIsGalleryOpen] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState<number | null>(null);
   const heroRef = useRef(null);
   const { scrollYProgress } = useScroll();
   const y = useTransform(scrollYProgress, [0, 1], [0, -200]);
 
+  useEffect(() => {
+    if (isGalleryOpen || currentImageIndex !== null) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isGalleryOpen, currentImageIndex]);
+
   return (
     <div className="min-h-screen selection:bg-earth-500/30 selection:text-forest-900">
+      {/* Fullscreen Image Viewer */}
+      <AnimatePresence>
+        {currentImageIndex !== null && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[110] bg-forest-900/95 flex items-center justify-center backdrop-blur-sm"
+            onClick={() => setCurrentImageIndex(null)}
+          >
+            <button 
+              onClick={(e) => {
+                e.stopPropagation();
+                setCurrentImageIndex(null);
+              }}
+              className="absolute top-6 right-6 w-12 h-12 rounded-full bg-cream-100/10 flex items-center justify-center hover:bg-earth-500 hover:text-forest-900 transition-colors text-cream-100 z-50"
+            >
+              <X />
+            </button>
+
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setCurrentImageIndex((prev) => (prev! > 0 ? prev! - 1 : GALLERY_IMAGES.length - 1));
+              }}
+              className="absolute left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-cream-100/10 flex items-center justify-center hover:bg-earth-500 hover:text-forest-900 transition-colors text-cream-100 z-50"
+            >
+              <ChevronRight className="rotate-180" />
+            </button>
+
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setCurrentImageIndex((prev) => (prev! < GALLERY_IMAGES.length - 1 ? prev! + 1 : 0));
+              }}
+              className="absolute right-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-cream-100/10 flex items-center justify-center hover:bg-earth-500 hover:text-forest-900 transition-colors text-cream-100 z-50"
+            >
+              <ChevronRight />
+            </button>
+
+            <motion.img
+              key={currentImageIndex}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.2 }}
+              src={GALLERY_IMAGES[currentImageIndex]}
+              alt={`Gallery image ${currentImageIndex + 1} full`}
+              className="max-w-[90vw] max-h-[90vh] object-contain"
+              referrerPolicy="no-referrer"
+              onClick={(e) => e.stopPropagation()}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Photo Gallery Modal */}
+      <AnimatePresence>
+        {isGalleryOpen && (
+          <motion.div 
+            initial={{ opacity: 0, y: "10%" }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: "10%" }}
+            transition={{ type: "spring", damping: 25, stiffness: 200 }}
+            className="fixed inset-0 z-[100] bg-cream-100 overflow-y-auto"
+          >
+            <div className="sticky top-0 bg-cream-100/90 backdrop-blur-md z-10 px-6 py-4 flex items-center justify-between border-b border-forest-900/10">
+               <div>
+                  <h3 className="text-2xl font-serif font-black text-forest-900 italic">昆虫学ギャラリー</h3>
+                  <p className="text-xs tracking-widest text-earth-500 uppercase font-bold">Entomology Tour Archives</p>
+               </div>
+               <button 
+                onClick={() => setIsGalleryOpen(false)}
+                className="w-12 h-12 rounded-full bg-forest-900/5 flex items-center justify-center hover:bg-earth-500 hover:text-cream-100 transition-colors"
+               >
+                 <X />
+               </button>
+            </div>
+            
+            <div className="container mx-auto px-6 py-12">
+               <div className="columns-2 md:columns-3 lg:columns-4 gap-6 space-y-6">
+                  {GALLERY_IMAGES.map((url, i) => {
+                     return (
+                       <motion.div 
+                         key={i}
+                         initial={{ opacity: 0, y: 20 }}
+                         whileInView={{ opacity: 1, y: 0 }}
+                         viewport={{ once: true, margin: "100px" }}
+                         transition={{ delay: (i % 10) * 0.05 }}
+                         onClick={() => setCurrentImageIndex(i)}
+                         className="break-inside-avoid rounded-2xl overflow-hidden cursor-pointer group bg-forest-900/5 relative"
+                       >
+                         <img 
+                           src={url} 
+                           alt={`Gallery image ${i + 1}`}
+                           className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500"
+                           referrerPolicy="no-referrer"
+                           loading="lazy"
+                         />
+                         <div className="absolute inset-0 bg-forest-900/0 group-hover:bg-forest-900/20 transition-colors duration-500 flex items-center justify-center">
+                            <Search className="text-cream-100 opacity-0 group-hover:opacity-100 scale-50 group-hover:scale-100 transition-all duration-300" size={32} />
+                         </div>
+                       </motion.div>
+                     )
+                  })}
+               </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Navigation */}
       <nav className="fixed top-0 w-full z-50 transition-all duration-300">
         <div className="backdrop-blur-md bg-cream-100/70 border-b border-forest-900/10 h-16 md:h-20 flex items-center justify-between px-6 md:px-12">
@@ -93,7 +217,14 @@ export default function App() {
             className="md:hidden bg-cream-100 border-b border-forest-900/10 p-8 flex flex-col gap-6"
           >
             {CONTENT.nav.map((item) => (
-              <a key={item} href={`#${item}`} className="text-lg font-medium">{item}</a>
+              <a 
+                key={item} 
+                href={`#${item}`} 
+                onClick={() => setIsMenuOpen(false)}
+                className="text-lg font-medium"
+              >
+                {item}
+              </a>
             ))}
             <button className="bg-forest-900 text-cream-100 px-6 py-3 rounded-xl font-bold">
               {CONTENT.cta.book}
@@ -386,6 +517,7 @@ export default function App() {
               </div>
               <motion.button 
                 whileHover={{ scale: 1.02 }}
+                onClick={() => setIsGalleryOpen(true)}
                 className="w-full sm:w-auto bg-forest-900 text-cream-100 px-10 py-5 rounded-full font-bold shadow-lg hover:bg-earth-500 transition-all flex items-center justify-center gap-4 group"
               >
                 <Search size={18} />
@@ -582,9 +714,20 @@ export default function App() {
             <div>
               <h5 className="font-serif font-bold text-lg mb-8 italic">Contact</h5>
               <p className="text-cream-100/50 text-sm leading-loose tracking-widest">
-                Roura - Kaw Marsh Area<br />
-                French Guiana<br />
-                <span className="block mt-4 text-cream-100">info@amazonenature.com</span>
+                {CONTENT.contact.address.map((line, i) => (
+                  <span key={i}>{line}<br /></span>
+                ))}
+                <span className="block mt-4 text-cream-100">
+                  <a href={`tel:${CONTENT.contact.phone}`} className="hover:text-earth-500 transition-colors">
+                    {CONTENT.contact.phone}
+                  </a>
+                  <span className="ml-2 text-earth-500 text-xs">{CONTENT.contact.notes}</span>
+                </span>
+                <span className="block mt-2 text-cream-100">
+                  <a href={`mailto:${CONTENT.contact.email}`} className="hover:text-earth-500 transition-colors">
+                    {CONTENT.contact.email}
+                  </a>
+                </span>
               </p>
             </div>
           </div>
