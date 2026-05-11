@@ -237,7 +237,7 @@ export default function App() {
       <section id="ホーム" ref={heroRef} className="relative h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <img 
-            src="https://picsum.photos/seed/forest-resort/1920/1080" 
+            src="https://i.postimg.cc/dtVbhdcK/image.png" 
             alt="Amazon Rainforest"
             className="w-full h-full object-cover scale-110"
             referrerPolicy="no-referrer"
@@ -324,11 +324,11 @@ export default function App() {
             className="grid grid-cols-12 gap-4 h-[500px]"
           >
             <div className="col-span-8 rounded-3xl overflow-hidden shadow-2xl">
-               <img src="https://picsum.photos/seed/lodge-ext/800/1000" alt="Lodge Exterior" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+               <img src="https://i.postimg.cc/PxNDL2y1/image.png" alt="Lodge Exterior" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
             </div>
             <div className="col-span-4 flex flex-col gap-4">
               <div className="h-1/2 rounded-3xl overflow-hidden shadow-xl">
-                 <img src="https://picsum.photos/seed/jungle-view/500/500" alt="Jungle View" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                 <img src="https://i.postimg.cc/d1XWHWV4/image.png" alt="Jungle View" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
               </div>
               <div className="h-1/2 rounded-3xl overflow-hidden shadow-xl bg-forest-900 flex items-center justify-center p-6 text-cream-100 text-center">
                  <p className="text-xs font-medium tracking-tighter">自然との対話。</p>
@@ -410,7 +410,7 @@ export default function App() {
               >
                 <div className="absolute inset-0 grayscale group-hover:grayscale-0 transition-all duration-700">
                   <img 
-                    src={`https://picsum.photos/seed/lodge-${item.id}/800/1200`} 
+                    src={item.image} 
                     alt={item.name} 
                     className="w-full h-full object-cover scale-105 group-hover:scale-100 transition-transform duration-700" 
                     referrerPolicy="no-referrer"

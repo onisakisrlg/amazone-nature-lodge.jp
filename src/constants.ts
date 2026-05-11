@@ -34,21 +34,25 @@ export const CONTENT = {
         id: "kouali",
         name: "クアリ・ロッジ (Kouali)",
         description: "バスルーム、専用トイレ、ワークルーム、独立したキッチンを備えた機能的なロッジです。",
+        image: "https://i.postimg.cc/cCrp6grL/image.png"
       },
       {
         id: "grignon",
         name: "グリニョン・ロッジ (Grignon)",
         description: "研究や長期滞在に適した、ワークルームとキッチン完備の快適な独立型ロッジ。",
+        image: "https://i.postimg.cc/vHpsgz7V/image.png"
       },
       {
         id: "sun",
         name: "サン・ロッジ (Sun Lodges)",
         description: "5棟のサン・ロッジでは、環境に配慮しつつ心地よい滞在を提供します。",
+        image: "https://i.postimg.cc/bvfpMTdg/image.png"
       },
       {
         id: "angelique",
         name: "アンジェリック・ロッジ (Angelique)",
-        description: "森の静けさを独り占めできる立地。独立したキッチンを備え、プライバシーを重視する方に最適。"
+        description: "森の静けさを独り占めできる立地。独立したキッチンを備え、プライバシーを重視する方に最適。",
+        image: "https://i.postimg.cc/Pr8GjwgR/image.png"
       }
     ]
   },
@@ -109,9 +113,6 @@ export const CONTENT = {
 };
 
 export const GALLERY_IMAGES = [
-  "https://i.postimg.cc/7hpgjpcN/Camera-1040g3k031tru3r996o005os39gunrjn23j0c7ho.jpg",
-  "https://i.postimg.cc/xj7ykzC1/Camera-1040g3k031tru3s26gc005os39gunrjn2g8pbelg.jpg",
-  "https://i.postimg.cc/kMZFVb44/Camera-1040g3k031tru3vbegc005os39gunrjn2hc8q9lo.jpg",
   "https://i.postimg.cc/053d6wQ5/IMG-20260430-120247.jpg",
   "https://i.postimg.cc/QNPkBTtj/IMG-20260430-220323.jpg",
   "https://i.postimg.cc/RVH1wZ6d/IMG-20260430-220343.jpg",
