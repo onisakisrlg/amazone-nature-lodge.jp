@@ -42,12 +42,13 @@ export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState<number | null>(null);
+  const [exportImageUrl, setExportImageUrl] = useState<string | null>(null);
   const heroRef = useRef(null);
   const { scrollYProgress } = useScroll();
   const y = useTransform(scrollYProgress, [0, 1], [0, -200]);
 
   useEffect(() => {
-    if (isGalleryOpen || currentImageIndex !== null) {
+    if (isGalleryOpen || currentImageIndex !== null || exportImageUrl !== null) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
@@ -55,7 +56,7 @@ export default function App() {
     return () => {
       document.body.style.overflow = 'unset';
     };
-  }, [isGalleryOpen, currentImageIndex]);
+  }, [isGalleryOpen, currentImageIndex, exportImageUrl]);
 
   return (
     <div className="min-h-screen selection:bg-earth-500/30 selection:text-forest-900">
@@ -107,6 +108,41 @@ export default function App() {
               transition={{ duration: 0.2 }}
               src={GALLERY_IMAGES[currentImageIndex]}
               alt={`Gallery image ${currentImageIndex + 1} full`}
+              className="max-w-[90vw] max-h-[90vh] object-contain"
+              referrerPolicy="no-referrer"
+              onClick={(e) => e.stopPropagation()}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Specific Image Viewer */}
+      <AnimatePresence>
+        {exportImageUrl !== null && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[110] bg-forest-900/95 flex items-center justify-center backdrop-blur-sm"
+            onClick={() => setExportImageUrl(null)}
+          >
+            <button 
+              onClick={(e) => {
+                e.stopPropagation();
+                setExportImageUrl(null);
+              }}
+              className="absolute top-6 right-6 w-12 h-12 rounded-full bg-cream-100/10 flex items-center justify-center hover:bg-earth-500 hover:text-forest-900 transition-colors text-cream-100 z-50"
+            >
+              <X />
+            </button>
+
+            <motion.img
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.2 }}
+              src={exportImageUrl}
+              alt="Export Support Details"
               className="max-w-[90vw] max-h-[90vh] object-contain"
               referrerPolicy="no-referrer"
               onClick={(e) => e.stopPropagation()}
@@ -450,7 +486,7 @@ export default function App() {
            >
              <div className="aspect-square rounded-full border-2 border-forest-900/10 p-4">
                 <div className="w-full h-full rounded-full overflow-hidden">
-                  <img src="https://picsum.photos/seed/insect-study/1000/1000" alt="Entomology" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                  <img src="https://i.postimg.cc/jddqBhs4/image.png" alt="Entomology" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
                 </div>
              </div>
              <div className="absolute -bottom-10 -right-10 bg-earth-500 text-cream-100 p-10 rounded-2xl shadow-xl hidden lg:block">
@@ -478,11 +514,11 @@ export default function App() {
                 {CONTENT.entomology.description}
               </p>
               
-              <div className="grid grid-cols-3 gap-6 mb-12 bg-forest-900/5 p-8 rounded-3xl border border-forest-900/5">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-6 mb-12 bg-forest-900/5 p-8 rounded-3xl border border-forest-900/5">
                 {CONTENT.entomology.stats.map((stat, idx) => (
                   <div key={idx} className="text-center">
                     <span className="block text-2xl md:text-4xl font-serif font-black text-earth-500 mb-1">{stat.value}</span>
-                    <span className="text-[9px] uppercase tracking-widest font-bold text-forest-900/40">{stat.label}</span>
+                    <span className="text-[10px] md:text-[9px] uppercase tracking-widest font-bold text-forest-900/40">{stat.label}</span>
                   </div>
                 ))}
               </div>
@@ -572,7 +608,10 @@ export default function App() {
                     "{CONTENT.exportSupport.guarantee}"
                   </p>
                   <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-                     <button className="w-full sm:w-auto bg-cream-100 text-forest-900 px-10 py-5 rounded-full font-black tracking-widest uppercase shadow-lg hover:bg-earth-500 transition-colors">
+                     <button 
+                       onClick={() => setExportImageUrl("https://i.postimg.cc/cCLtJGNB/image.png")}
+                       className="w-full sm:w-auto bg-cream-100 text-forest-900 px-10 py-5 rounded-full font-black tracking-widest uppercase shadow-lg hover:bg-earth-500 transition-colors"
+                     >
                         輸出申告の手続き詳細
                      </button>
                      <div className="flex items-center gap-4 text-xs font-bold tracking-[0.2em] uppercase opacity-50">
@@ -617,7 +656,7 @@ export default function App() {
         <div className="container mx-auto px-6 flex flex-col md:flex-row gap-20 items-center">
           <div className="md:w-1/2">
              <div className="rounded-3xl overflow-hidden shadow-2xl relative">
-                <img src="https://picsum.photos/seed/amazone-food/1000/1500" alt="Cuisine" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                <img src="https://i.postimg.cc/t48XZQF8/image.png" alt="Cuisine" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
                 <div className="absolute inset-0 bg-forest-900/10" />
              </div>
           </div>
