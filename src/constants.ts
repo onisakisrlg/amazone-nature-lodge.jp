@@ -33,26 +33,26 @@ export const CONTENT = {
       {
         id: "kouali",
         name: "クアリ・ロッジ (Kouali)",
-        description: "バスルーム、専用トイレ、ワークルーム、独立したキッチンを備えた機能的なロッジです。",
-        image: "https://i.postimg.cc/cCrp6grL/image.png"
+        description: "Bathroom with solar water heater, individual toilet, Workroom, Separate kitchen.",
+        image: "https://i.postimg.cc/c1McLWhV/9297aa9970e9b771b4970e36a4d4e2b5.jpg"
       },
       {
         id: "grignon",
         name: "グリニョン・ロッジ (Grignon)",
-        description: "研究や長期滞在に適した、ワークルームとキッチン完備の快適な独立型ロッジ。",
-        image: "https://i.postimg.cc/vHpsgz7V/image.png"
+        description: "Bathroom with solar water heater, individual toilets, Workroom, Separate kitchen.",
+        image: "https://i.postimg.cc/tCJVGGM3/c6d630a1928b3485e49ff4ef2ca96fa3.jpg"
       },
       {
         id: "sun",
         name: "サン・ロッジ (Sun Lodges)",
-        description: "5棟のサン・ロッジでは、環境に配慮しつつ心地よい滞在を提供します。",
-        image: "https://i.postimg.cc/bvfpMTdg/image.png"
+        description: "5 sun lodges at your disposal with every comfort.\n\nEach one with bathroom (solar water heater and individual toilet).",
+        image: "https://i.postimg.cc/MGLzBgDw/d96433bf43549a7cb8478cafa330a0cf.jpg"
       },
       {
         id: "angelique",
         name: "アンジェリック・ロッジ (Angelique)",
-        description: "森の静けさを独り占めできる立地。独立したキッチンを備え、プライバシーを重視する方に最適。",
-        image: "https://i.postimg.cc/Pr8GjwgR/image.png"
+        description: "Bathroom with solar water heater, individual toilet, Separate kitchen.",
+        image: "https://i.postimg.cc/Lscr2ST7/3ba37be947e72d5b59ae35c49a42e65c.jpg"
       }
     ]
   },

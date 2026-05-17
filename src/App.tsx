@@ -43,6 +43,7 @@ export default function App() {
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState<number | null>(null);
   const [exportImageUrl, setExportImageUrl] = useState<string | null>(null);
+  const [expandedLodge, setExpandedLodge] = useState<string | null>(null);
   const heroRef = useRef(null);
   const { scrollYProgress } = useScroll();
   const y = useTransform(scrollYProgress, [0, 1], [0, -200]);
@@ -444,7 +445,7 @@ export default function App() {
                 transition={{ delay: idx * 0.2 }}
                 className="group relative h-[450px] rounded-3xl overflow-hidden"
               >
-                <div className="absolute inset-0 grayscale group-hover:grayscale-0 transition-all duration-700">
+                <div className="absolute inset-0 transition-all duration-700">
                   <img 
                     src={item.image} 
                     alt={item.name} 
@@ -453,13 +454,18 @@ export default function App() {
                   />
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-forest-900 via-transparent to-transparent opacity-80" />
-                <div className="absolute bottom-0 left-0 p-8 w-full translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                <div className={`absolute bottom-0 left-0 p-8 w-full transition-all duration-500 ease-in-out ${expandedLodge === item.id ? 'translate-y-0 bg-forest-900/90 backdrop-blur-md' : 'translate-y-4'}`}>
                   <h3 className="text-2xl font-serif font-bold mb-2">{item.name}</h3>
-                  <p className="text-sm text-cream-100/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 leading-relaxed mb-6">
-                    {item.description}
-                  </p>
-                  <button className="text-xs uppercase tracking-[0.2em] font-bold border-b border-cream-100/30 pb-2 hover:border-cream-100 transition-colors">
-                    {CONTENT.cta.viewMore}
+                  <div className={`overflow-hidden transition-all duration-500 ease-in-out ${expandedLodge === item.id ? 'max-h-40 opacity-100 mb-6' : 'max-h-0 opacity-0 mb-0'}`}>
+                    <p className="text-sm text-cream-100/80 leading-relaxed whitespace-pre-line">
+                      {item.description}
+                    </p>
+                  </div>
+                  <button 
+                    onClick={() => setExpandedLodge(expandedLodge === item.id ? null : item.id)}
+                    className="text-xs uppercase tracking-[0.2em] font-bold border-b border-cream-100/30 pb-2 hover:border-cream-100 transition-colors"
+                  >
+                    {expandedLodge === item.id ? '閉じる' : CONTENT.cta.viewMore}
                   </button>
                 </div>
               </motion.div>
